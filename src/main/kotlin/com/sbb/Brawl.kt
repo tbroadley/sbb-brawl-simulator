@@ -1,6 +1,12 @@
 package com.sbb
 
 data class Brawl(
-    val board1: Board,
-    val board2: Board,
-)
+    var board1: Board,
+    var board2: Board,
+) {
+    enum class Result {
+        BOARD1_WIN,
+        BOARD2_WIN,
+        TIE,
+    }
+}
