@@ -32,7 +32,8 @@ data class Board(
 }
 
 fun List<CharacterInstance?>.randomCharacter(): CharacterInstance? {
-    if (isEmpty()) return null
+    val characters = filterNotNull()
+    if (characters.isEmpty()) return null
 
-    return this[Random.nextInt(size)]
+    return characters[Random.nextInt(characters.size)]
 }

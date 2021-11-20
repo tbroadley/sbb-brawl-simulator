@@ -7,7 +7,7 @@ fun simulate(brawl: Brawl): Brawl.Result {
     var attackingBoard = if (Random.nextBoolean()) brawl.board1 else brawl.board2
     println("$attackingBoard goes first")
 
-    while (!brawl.board1.isEmpty() && !brawl.board2.isEmpty()) {
+    while (true) {
         val defendingBoard = if (attackingBoard == brawl.board1) brawl.board2 else brawl.board1
 
         val attacker = attackingBoard.nextAttacker()
@@ -17,12 +17,16 @@ fun simulate(brawl: Brawl): Brawl.Result {
         attacker.health -= defender.attack
 
         if (attacker.health <= 0) {
-            attackingBoard.remove(defender)
+            attackingBoard.remove(attacker)
         }
 
         if (defender.health <= 0) {
             defendingBoard.remove(defender)
         }
+
+        if (brawl.board1.isEmpty() && brawl.board2.isEmpty()) return TIE
+        if (brawl.board1.isEmpty()) return BOARD2_WIN
+        if (brawl.board2.isEmpty()) return BOARD1_WIN
 
         attackingBoard.updateNextAttackerIndex()
 
