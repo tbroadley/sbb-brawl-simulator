@@ -1,11 +1,14 @@
 package com.sbb
 
-import java.lang.IllegalStateException
 import kotlin.random.Random
 
 data class Board(
     val positions: MutableList<CharacterInstance?>,
 ) {
+    constructor(vararg positions: CharacterInstance?) : this(
+        (positions.toList() + arrayOfNulls<CharacterInstance>(7 - positions.size)).toMutableList()
+    )
+
     var nextAttackerIndex: Int = 0
 
     fun isEmpty() = positions.all { it == null }
@@ -29,7 +32,8 @@ data class Board(
         for (index in 0 until 7) {
             if (positions[nextAttackerIndex] != null && positions[nextAttackerIndex] != attacker) break
 
-            nextAttackerIndex = (nextAttackerIndex + 1) % positions.size
+            nextAttackerIndex += 1
+            nextAttackerIndex %= positions.size
         }
     }
 }
