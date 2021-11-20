@@ -32,12 +32,6 @@ fun simulate(brawl: Brawl): Brawl.Result {
 
         attackingBoard = defendingBoard
     }
-
-    return when {
-        !brawl.board1.isEmpty() -> BOARD2_WIN
-        !brawl.board2.isEmpty() -> BOARD1_WIN
-        else -> TIE
-    }
 }
 
 class Simulator {
