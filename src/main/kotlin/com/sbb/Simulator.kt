@@ -13,6 +13,8 @@ fun simulate(brawl: Brawl): Brawl.Result {
         val attacker = attackingBoard.nextAttacker()
         val defender = defendingBoard.randomFrontRowCharacter() ?: defendingBoard.randomCharacter()!!
 
+        println("$attacker in position ${attackingBoard.nextAttackerIndex} attacks $defender")
+
         defender.health -= attacker.attack
         attacker.health -= defender.attack
 
@@ -28,7 +30,7 @@ fun simulate(brawl: Brawl): Brawl.Result {
         if (brawl.board1.isEmpty()) return BOARD2_WIN
         if (brawl.board2.isEmpty()) return BOARD1_WIN
 
-        attackingBoard.updateNextAttackerIndex()
+        attackingBoard.updateNextAttackerIndex(attacker)
 
         attackingBoard = defendingBoard
     }
@@ -52,7 +54,8 @@ class Simulator {
                 ),
                 board2 = Board(
                     positions = mutableListOf(
-                        Character.TINY.toInstance(),
+                        Character.B_A_A_D_BILLY_GRUFF.toInstance(),
+                        Character.B_A_A_D_BILLY_GRUFF.toInstance(),
                         null,
                         null,
                         null,

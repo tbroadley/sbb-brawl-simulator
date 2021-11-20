@@ -1,5 +1,6 @@
 package com.sbb
 
+import java.lang.IllegalStateException
 import kotlin.random.Random
 
 data class Board(
@@ -22,10 +23,12 @@ data class Board(
         }
     }
 
-    fun updateNextAttackerIndex() {
+    fun updateNextAttackerIndex(attacker: CharacterInstance) {
         check(!isEmpty()) { "Board has no next attacker" }
 
-        while(positions[nextAttackerIndex] == null) {
+        for (index in 0 until 7) {
+            if (positions[nextAttackerIndex] != null && positions[nextAttackerIndex] != attacker) break
+
             nextAttackerIndex = (nextAttackerIndex + 1) % positions.size
         }
     }
