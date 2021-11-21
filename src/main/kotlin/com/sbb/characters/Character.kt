@@ -54,6 +54,11 @@ enum class Character(
         baseAttack = 2,
         baseHealth = 2,
     ),
+    CRAFTY(
+        humanReadableName = "Crafty",
+        baseAttack = 1,
+        baseHealth = 1,
+    ),
     CAT(
         humanReadableName = "Cat",
         baseAttack = 1,

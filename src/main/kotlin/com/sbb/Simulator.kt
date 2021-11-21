@@ -9,9 +9,6 @@ import com.sbb.characters.toInstance
 import com.sbb.probability.Distribution
 
 fun simulate(brawl: Brawl): Brawl.Result {
-    brawl.board1.applySupport()
-    brawl.board2.applySupport()
-
     var attackingBoard = Distribution.from(brawl.board1 to 0.5, brawl.board2 to 0.5).sample()
     println("$attackingBoard goes first")
 
@@ -64,7 +61,7 @@ class Simulator {
         @JvmStatic
         fun main(args: Array<String>) {
             val board1 = Board(APOCALYPSE)
-            board1.positions[0] = BLACK_CAT.toInstance(board1)
+            board1.positions[0] = BLACK_CAT.toInstance(board1, attack = 1, health = 4)
             board1.positions[4] = BABY_ROOT.toInstance(board1)
 
             val board2 = Board(SIR_GALAHAD)

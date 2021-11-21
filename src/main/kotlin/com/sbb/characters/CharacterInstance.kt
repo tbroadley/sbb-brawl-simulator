@@ -6,10 +6,9 @@ import com.sbb.characters.Keyword.Support
 class CharacterInstance(
     private val board: Board,
     val character: Character,
+    var attack: Long = character.baseAttack,
+    var health: Long = character.baseHealth,
 ) {
-    var attack = character.baseAttack
-    var health = character.baseHealth
-
     override fun toString(): String {
         return "${board.hero.humanReadableName}'s ${character.humanReadableName} " +
                 "in position ${board.getPositionOf(this) + 1} " +
@@ -28,3 +27,12 @@ class CharacterInstance(
 }
 
 fun Character.toInstance(board: Board) = CharacterInstance(board, this)
+
+fun Character.toInstance(board: Board, attack: Long, health: Long): CharacterInstance {
+    return CharacterInstance(
+        board = board,
+        character = this,
+        attack = attack,
+        health = health,
+    )
+}

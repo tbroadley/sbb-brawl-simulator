@@ -200,46 +200,15 @@ internal class BoardTest {
     }
 
     @Test
-    fun `support is applied to correct characters`() {
-        val board = Board(APOCALYPSE)
-
-        board.positions[0] = TINY.toInstance(board)
-        board.positions[1] = B_A_A_D_BILLY_GRUFF.toInstance(board)
-        board.positions[2] = TINY.toInstance(board)
-        board.positions[4] = BABY_ROOT.toInstance(board)
-
-        board.applySupport()
-
-        with(board.positions[0]!!) {
-            assertEquals(6, attack)
-            assertEquals(4, health)
-        }
-        with(board.positions[1]!!) {
-            assertEquals(2, attack)
-            assertEquals(6, health)
-        }
-        with(board.positions[2]!!) {
-            assertEquals(6, attack)
-            assertEquals(1, health)
-        }
-        with(board.positions[4]!!) {
-            assertEquals(0, attack)
-            assertEquals(3, health)
-        }
-    }
-
-    @Test
     fun `removing a unit removes its supports`() {
         val board = Board(APOCALYPSE)
 
         val babyRoot = BABY_ROOT.toInstance(board)
 
-        board.positions[0] = TINY.toInstance(board)
-        board.positions[1] = B_A_A_D_BILLY_GRUFF.toInstance(board)
+        board.positions[0] = TINY.toInstance(board, attack = 6, health = 4)
+        board.positions[1] = B_A_A_D_BILLY_GRUFF.toInstance(board, attack = 2, health = 6)
         board.positions[2] = TINY.toInstance(board)
         board.positions[4] = babyRoot
-
-        board.applySupport()
 
         board.remove(babyRoot)
 

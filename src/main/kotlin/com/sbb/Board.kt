@@ -51,18 +51,6 @@ data class Board(
     fun frontRowCharacterDistribution() = positions.take(4).uniformDistribution()
     fun backRowCharacterDistribution() = positions.drop(4).uniformDistribution()
     fun characterDistribution() = positions.uniformDistribution()
-
-    fun applySupport() {
-        for (index in 4 until 7) {
-            val supports = positions[index]?.character?.supports() ?: continue
-
-            for (indexInFront in index.positionsInFront()) {
-                for (support in supports) {
-                    positions[indexInFront]?.applySupport(support)
-                }
-            }
-        }
-    }
 }
 
 private fun List<CharacterInstance?>.uniformDistribution(): Distribution<CharacterInstance?> {
