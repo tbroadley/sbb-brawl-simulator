@@ -198,4 +198,34 @@ internal class BoardTest {
         )
         assertEquals(Distribution.from(character3 to 1.0), board.backRowCharacterDistribution())
     }
+
+    @Test
+    fun `support is applied to correct characters`() {
+        val board = Board(APOCALYPSE)
+
+        board.positions[0] = TINY.toInstance(board)
+        board.positions[1] = B_A_A_D_BILLY_GRUFF.toInstance(board)
+        board.positions[2] = TINY.toInstance(board)
+        board.positions[4] = BABY_ROOT.toInstance(board)
+        board.positions[4] = BABY_ROOT.toInstance(board)
+
+        board.applySupport()
+
+        with(board.positions[0]!!) {
+            assertEquals(6, attack)
+            assertEquals(4, health)
+        }
+        with(board.positions[1]!!) {
+            assertEquals(2, attack)
+            assertEquals(6, health)
+        }
+        with(board.positions[2]!!) {
+            assertEquals(6, attack)
+            assertEquals(1, health)
+        }
+        with(board.positions[4]!!) {
+            assertEquals(0, attack)
+            assertEquals(3, health)
+        }
+    }
 }
