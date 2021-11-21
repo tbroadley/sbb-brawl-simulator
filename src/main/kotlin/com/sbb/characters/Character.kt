@@ -1,6 +1,7 @@
 package com.sbb.characters
 
 import com.sbb.characters.Keyword.FLYING
+import com.sbb.characters.Keyword.SUPPORT
 
 enum class Character(
     val humanReadableName: String,
@@ -18,6 +19,12 @@ enum class Character(
         baseAttack = 3,
         baseHealth = 2,
         keywords = listOf(FLYING),
+    ),
+    BABY_ROOT(
+        humanReadableName = "Baby Root",
+        baseAttack = 0,
+        baseHealth = 3,
+        keywords = listOf(SUPPORT(health = 3)),
     ),
     TINY(
         humanReadableName = "Tiny",
