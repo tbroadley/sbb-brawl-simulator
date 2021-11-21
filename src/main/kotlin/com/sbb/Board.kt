@@ -8,6 +8,8 @@ data class Board(
 ) {
     constructor(hero: Hero) : this(hero, arrayOfNulls<CharacterInstance>(7).toMutableList())
 
+    override fun toString() = hero.humanReadableName
+
     fun getPositionOf(character: CharacterInstance) = positions.indexOf(character)
 
     var nextAttackerIndex: Int = 0

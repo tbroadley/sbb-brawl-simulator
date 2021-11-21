@@ -1,8 +1,15 @@
 package com.sbb
 
 enum class Hero(
+    val humanReadableName: String,
     val baseHealth: Long,
 ) {
-    APOCALYPSE(50),
-    SIR_GALAHAD(40),
+    APOCALYPSE(
+        humanReadableName = "Apocalypse",
+        baseHealth = 50,
+    ),
+    SIR_GALAHAD(
+        humanReadableName = "Sir Galahad",
+        baseHealth = 40,
+    ),
 }

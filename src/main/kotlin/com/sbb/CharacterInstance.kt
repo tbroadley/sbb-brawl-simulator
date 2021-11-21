@@ -8,7 +8,7 @@ class CharacterInstance(
     var health = character.baseHealth
 
     override fun toString(): String {
-        return "${character.humanReadableName} " +
+        return "${board.hero.humanReadableName}'s ${character.humanReadableName} " +
                 "in position ${board.getPositionOf(this) + 1} " +
                 "with $attack attack and $health health"
     }
