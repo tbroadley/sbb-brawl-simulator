@@ -15,8 +15,7 @@ internal class BoardTest {
         val attacker = TINY.toInstance(board)
         val nextAttacker = TINY.toInstance(board)
 
-        board.positions[0] = attacker
-        board.positions[1] = nextAttacker
+        board.setStartingPositions(0 to attacker, 1 to nextAttacker)
 
         board.updateNextAttackerIndex(attacker)
         assertEquals(nextAttacker, board.nextAttacker())
@@ -30,7 +29,7 @@ internal class BoardTest {
         val attacker = TINY.toInstance(board)
         val nextAttacker = TINY.toInstance(board)
 
-        board.positions[1] = nextAttacker
+        board.setStartingPositions(1 to nextAttacker)
 
         board.updateNextAttackerIndex(attacker)
         assertEquals(nextAttacker, board.nextAttacker())
@@ -45,8 +44,7 @@ internal class BoardTest {
         val replacement = B_A_A_D_BILLY_GRUFF.toInstance(board)
         val nextAttacker = TINY.toInstance(board)
 
-        board.positions[0] = replacement
-        board.positions[1] = nextAttacker
+        board.setStartingPositions(0 to replacement, 1 to nextAttacker)
 
         board.updateNextAttackerIndex(attacker)
         assertEquals(replacement, board.nextAttacker())
@@ -61,9 +59,7 @@ internal class BoardTest {
         val secondAttacker = B_A_A_D_BILLY_GRUFF.toInstance(board)
         val thirdAttacker = TINY.toInstance(board)
 
-        board.positions[0] = firstAttacker
-        board.positions[2] = secondAttacker
-        board.positions[6] = thirdAttacker
+        board.setStartingPositions(0 to firstAttacker, 2 to secondAttacker, 6 to thirdAttacker)
 
         board.updateNextAttackerIndex(firstAttacker)
         assertEquals(secondAttacker, board.nextAttacker())
@@ -86,9 +82,7 @@ internal class BoardTest {
         val babyRoot = BABY_ROOT.toInstance(board)
         val secondAttacker = TINY.toInstance(board)
 
-        board.positions[0] = firstAttacker
-        board.positions[1] = babyRoot
-        board.positions[2] = secondAttacker
+        board.setStartingPositions(0 to firstAttacker, 1 to babyRoot, 2 to secondAttacker)
 
         board.updateNextAttackerIndex(firstAttacker)
         assertEquals(secondAttacker, board.nextAttacker())
@@ -102,8 +96,7 @@ internal class BoardTest {
         val character1 = TINY.toInstance(board)
         val character2 = TINY.toInstance(board)
 
-        board.positions[0] = character1
-        board.positions[2] = character2
+        board.setStartingPositions(0 to character1, 2 to character2)
 
         board.remove(character1)
         assertEquals(
@@ -136,8 +129,7 @@ internal class BoardTest {
         val character1 = TINY.toInstance(board)
         val character2 = BABY_DRAGON.toInstance(board)
 
-        board.positions[0] = character1
-        board.positions[2] = character2
+        board.setStartingPositions(0 to character1, 2 to character2)
 
         assertEquals(
             Distribution.from(character1 to 0.5, character2 to 0.5),
@@ -158,9 +150,11 @@ internal class BoardTest {
         val character2 = BABY_DRAGON.toInstance(board)
         val character3 = B_A_A_D_BILLY_GRUFF.toInstance(board)
 
-        board.positions[4] = character1
-        board.positions[5] = character2
-        board.positions[6] = character3
+        board.setStartingPositions(
+            4 to character1,
+            5 to character2,
+            6 to character3,
+        )
 
         assertEquals(
             Distribution.from(character1 to 1.0 / 3, character2 to 1.0 / 3, character3 to 1.0 / 3),
@@ -181,9 +175,11 @@ internal class BoardTest {
         val character2 = BABY_DRAGON.toInstance(board)
         val character3 = B_A_A_D_BILLY_GRUFF.toInstance(board)
 
-        board.positions[0] = character1
-        board.positions[3] = character2
-        board.positions[5] = character3
+        board.setStartingPositions(
+            0 to character1,
+            3 to character2,
+            5 to character3,
+        )
 
         assertEquals(
             Distribution.from(character1 to 1.0 / 3, character2 to 1.0 / 3, character3 to 1.0 / 3),
@@ -200,15 +196,35 @@ internal class BoardTest {
     }
 
     @Test
-    fun `removing a unit removes its supports`() {
+    fun `summoning and removing a unit adds and  its supports`() {
         val board = Board(APOCALYPSE)
 
         val babyRoot = BABY_ROOT.toInstance(board)
 
-        board.positions[0] = TINY.toInstance(board, attack = 6, health = 4)
-        board.positions[1] = B_A_A_D_BILLY_GRUFF.toInstance(board, attack = 2, health = 6)
-        board.positions[2] = TINY.toInstance(board)
-        board.positions[4] = babyRoot
+        board.setStartingPositions(
+            0 to TINY.toInstance(board),
+            1 to B_A_A_D_BILLY_GRUFF.toInstance(board),
+            2 to TINY.toInstance(board),
+        )
+
+        board.summon(babyRoot, 4)
+
+        with(board.positions[0]!!) {
+            assertEquals(6, attack)
+            assertEquals(4, health)
+        }
+        with(board.positions[1]!!) {
+            assertEquals(2, attack)
+            assertEquals(6, health)
+        }
+        with(board.positions[2]!!) {
+            assertEquals(6, attack)
+            assertEquals(1, health)
+        }
+        with(board.positions[4]!!) {
+            assertEquals(0, attack)
+            assertEquals(3, health)
+        }
 
         board.remove(babyRoot)
 
@@ -228,14 +244,30 @@ internal class BoardTest {
     }
 
     @Test
-    fun `removing a unit with trait-based supports removes them from matching units`() {
+    fun `adding and removing a unit with trait-based supports adds and removes them from matching units`() {
         val board = Board(APOCALYPSE)
 
         val fanny = FANNY.toInstance(board)
 
-        board.positions[0] = TINY.toInstance(board, attack = 8, health = 3)
-        board.positions[1] = B_A_A_D_BILLY_GRUFF.toInstance(board)
-        board.positions[4] = fanny
+        board.setStartingPositions(
+            0 to TINY.toInstance(board),
+            1 to B_A_A_D_BILLY_GRUFF.toInstance(board),
+        )
+
+        board.summon(fanny, 4)
+
+        with(board.positions[0]!!) {
+            assertEquals(8, attack)
+            assertEquals(3, health)
+        }
+        with(board.positions[1]!!) {
+            assertEquals(2, attack)
+            assertEquals(3, health)
+        }
+        with(board.positions[4]!!) {
+            assertEquals(2, attack)
+            assertEquals(2, health)
+        }
 
         board.remove(fanny)
 
@@ -258,15 +290,15 @@ internal class BoardTest {
     @Test
     fun `board with only zero-attack units has no attackers`() {
         val board = Board(APOCALYPSE)
-        board.positions[0] = BABY_ROOT.toInstance(board)
+        board.summon(BABY_ROOT.toInstance(board), 0)
         assertTrue(board.hasNoAttackers())
     }
 
     @Test
     fun `board with non-zero-attack units has attackers`() {
         val board = Board(APOCALYPSE)
-        board.positions[0] = BABY_ROOT.toInstance(board)
-        board.positions[1] = TINY.toInstance(board)
+        board.summon(BABY_ROOT.toInstance(board), 0)
+        board.summon(TINY.toInstance(board), 1)
         assertFalse(board.hasNoAttackers())
     }
 }

@@ -7,12 +7,13 @@ import com.sbb.treasures.Treasure
 data class Board(
     val hero: Hero,
     val treasures: List<Treasure> = listOf(),
-    val positions: MutableList<CharacterInstance?>,
 ) {
-    constructor(hero: Hero) : this(
-        hero = hero,
-        positions = arrayOfNulls<CharacterInstance>(7).toMutableList()
-    )
+    constructor(hero: Hero) : this(hero = hero, treasures = listOf())
+
+    private val internalPositions = arrayOfNulls<CharacterInstance>(7).toMutableList()
+
+    val positions
+        get() = internalPositions.toList()
 
     override fun toString() = hero.humanReadableName
 
@@ -21,9 +22,33 @@ data class Board(
 
     fun getPositionOf(character: CharacterInstance) = positions.indexOf(character)
 
+    fun setStartingPositions(vararg characters: Pair<Int, CharacterInstance>) {
+        for ((index, character) in characters.toList()) {
+            internalPositions[index] = character
+        }
+    }
+
+    fun summon(character: CharacterInstance, position: Int) {
+        internalPositions[position] = character
+
+        for (indexInFront in position.positionsInFront()) {
+            for (support in character.character.supports()) {
+                positions[indexInFront]?.addSupport(support)
+            }
+        }
+
+        for (indexBehind in position.positionsBehind()) {
+            val characterBehind = positions[indexBehind] ?: continue
+
+            for (support in characterBehind.character.supports()) {
+                character.addSupport(support)
+            }
+        }
+    }
+
     fun remove(character: CharacterInstance) {
         val position = getPositionOf(character)
-        positions[position] = null
+        internalPositions[position] = null
 
         for (indexInFront in position.positionsInFront()) {
             for (support in character.character.supports()) {

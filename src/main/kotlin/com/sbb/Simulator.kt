@@ -61,15 +61,17 @@ class Simulator {
         @JvmStatic
         fun main(args: Array<String>) {
             val board1 = Board(APOCALYPSE)
-            board1.positions[0] = BLACK_CAT.toInstance(board1, attack = 1, health = 4)
-            board1.positions[4] = BABY_ROOT.toInstance(board1)
+            board1.setStartingPositions(
+                0 to BLACK_CAT.toInstance(board1, attack = 1, health = 4),
+                4 to BABY_ROOT.toInstance(board1),
+            )
 
             val board2 = Board(SIR_GALAHAD)
-            board2.positions[0] = BABY_DRAGON.toInstance(board2)
+            board2.setStartingPositions(0 to BABY_DRAGON.toInstance(board2))
 
             val brawl = Brawl(board1 = board1, board2 = board2)
 
-            when(simulate(brawl)) {
+            when (simulate(brawl)) {
                 BOARD1_WIN -> {
                     println("$board1 wins")
                 }

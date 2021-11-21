@@ -35,14 +35,7 @@ enum class Character(
         baseHealth = 1,
         keywords = listOf(
             LastBreath { board, position ->
-                board.positions[position] = CAT.toInstance(board)
-                for (indexBehind in position.positionsBehind()) {
-                    val supports = board.positions[indexBehind]?.character?.supports() ?: continue
-
-                    for (support in supports) {
-                        board.positions[position]?.applySupport(support)
-                    }
-                }
+                board.summon(CAT.toInstance(board), position)
             },
         ),
     ),

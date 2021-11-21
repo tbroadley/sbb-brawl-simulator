@@ -15,7 +15,7 @@ class CharacterInstance(
                 "with $attack attack and $health health"
     }
 
-    fun applySupport(support: Support) {
+    fun addSupport(support: Support) {
         if (!hasMatchingTrait(support)) return
 
         attack += support.attack
