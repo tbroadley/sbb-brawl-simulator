@@ -13,12 +13,7 @@ fun simulate(brawl: Brawl): Brawl.Result {
         val attacker = attackingBoard.nextAttacker()
         val defender = defendingBoard.randomFrontRowCharacter() ?: defendingBoard.randomCharacter()!!
 
-        println(
-            "${attacker.character.humanReadableName} " +
-                    "in position ${attackingBoard.nextAttackerIndex} " +
-                    "attacks ${defender.character.humanReadableName} " +
-                    "in position ${defendingBoard.getPositionOf(defender)}"
-        )
+        println("$attacker attacks $defender")
 
         defender.health -= attacker.attack
         attacker.health -= defender.attack
@@ -45,32 +40,14 @@ class Simulator {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            val brawl = Brawl(
-                board1 = Board(
-                    positions = mutableListOf(
-                        Character.B_A_A_D_BILLY_GRUFF.toInstance(),
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                    ),
-                ),
-                board2 = Board(
-                    positions = mutableListOf(
-                        Character.B_A_A_D_BILLY_GRUFF.toInstance(),
-                        Character.B_A_A_D_BILLY_GRUFF.toInstance(),
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                    ),
-                ),
-            )
+            val board1 = Board()
+            board1.positions[0] = Character.B_A_A_D_BILLY_GRUFF.toInstance(board1)
 
+            val board2 = Board()
+            board2.positions[0] = Character.B_A_A_D_BILLY_GRUFF.toInstance(board2)
+            board2.positions[1] = Character.B_A_A_D_BILLY_GRUFF.toInstance(board2)
+
+            val brawl = Brawl(board1 = board1, board2 = board2)
             println(simulate(brawl))
         }
     }

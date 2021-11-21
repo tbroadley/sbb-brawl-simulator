@@ -5,9 +5,7 @@ import kotlin.random.Random
 data class Board(
     val positions: MutableList<CharacterInstance?>,
 ) {
-    constructor(vararg positions: CharacterInstance?) : this(
-        positions.toList().padEnd(7, null).toMutableList(),
-    )
+    constructor() : this(arrayOfNulls<CharacterInstance>(7).toMutableList())
 
     fun getPositionOf(character: CharacterInstance) = positions.indexOf(character)
 

@@ -6,10 +6,13 @@ import org.junit.jupiter.api.Test
 internal class BoardTest {
     @Test
     fun `next attacker is correctly calculated when the attacker survives`() {
-        val attacker = Character.TINY.toInstance()
-        val nextAttacker = Character.TINY.toInstance()
+        val board = Board()
 
-        val board = Board(attacker, nextAttacker)
+        val attacker = Character.TINY.toInstance(board)
+        val nextAttacker = Character.TINY.toInstance(board)
+
+        board.positions[0] = attacker
+        board.positions[1] = nextAttacker
 
         board.updateNextAttackerIndex(attacker)
         assertEquals(nextAttacker, board.nextAttacker())
@@ -18,10 +21,12 @@ internal class BoardTest {
 
     @Test
     fun `next attacker is correctly calculated when the attacker dies`() {
-        val attacker = Character.TINY.toInstance()
-        val nextAttacker = Character.TINY.toInstance()
+        val board = Board()
 
-        val board = Board(null, nextAttacker)
+        val attacker = Character.TINY.toInstance(board)
+        val nextAttacker = Character.TINY.toInstance(board)
+
+        board.positions[1] = nextAttacker
 
         board.updateNextAttackerIndex(attacker)
         assertEquals(nextAttacker, board.nextAttacker())
@@ -30,11 +35,14 @@ internal class BoardTest {
 
     @Test
     fun `next attacker is correctly calculated when another unit replaces the dead attacker`() {
-        val attacker = Character.TINY.toInstance()
-        val replacement = Character.B_A_A_D_BILLY_GRUFF.toInstance()
-        val nextAttacker = Character.TINY.toInstance()
+        val board = Board()
 
-        val board = Board(replacement, nextAttacker)
+        val attacker = Character.TINY.toInstance(board)
+        val replacement = Character.B_A_A_D_BILLY_GRUFF.toInstance(board)
+        val nextAttacker = Character.TINY.toInstance(board)
+
+        board.positions[0] = replacement
+        board.positions[1] = nextAttacker
 
         board.updateNextAttackerIndex(attacker)
         assertEquals(replacement, board.nextAttacker())
@@ -43,19 +51,15 @@ internal class BoardTest {
 
     @Test
     fun `next attacker is calculated correctly when there is a gap`() {
-        val firstAttacker = Character.TINY.toInstance()
-        val secondAttacker = Character.B_A_A_D_BILLY_GRUFF.toInstance()
-        val thirdAttacker = Character.TINY.toInstance()
+        val board = Board()
 
-        val board = Board(
-            firstAttacker,
-            null,
-            secondAttacker,
-            null,
-            null,
-            null,
-            thirdAttacker,
-        )
+        val firstAttacker = Character.TINY.toInstance(board)
+        val secondAttacker = Character.B_A_A_D_BILLY_GRUFF.toInstance(board)
+        val thirdAttacker = Character.TINY.toInstance(board)
+
+        board.positions[0] = firstAttacker
+        board.positions[2] = secondAttacker
+        board.positions[6] = thirdAttacker
 
         board.updateNextAttackerIndex(firstAttacker)
         assertEquals(secondAttacker, board.nextAttacker())
@@ -72,14 +76,13 @@ internal class BoardTest {
 
     @Test
     fun `correct character is removed`() {
-        val character1 = Character.TINY.toInstance()
-        val character2 = Character.TINY.toInstance()
+        val board = Board()
 
-        val board = Board(
-            character1,
-            null,
-            character2,
-        )
+        val character1 = Character.TINY.toInstance(board)
+        val character2 = Character.TINY.toInstance(board)
+
+        board.positions[0] = character1
+        board.positions[2] = character2
 
         board.remove(character1)
         assertEquals(
