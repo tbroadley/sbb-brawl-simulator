@@ -48,9 +48,10 @@ fun simulate(brawl: Brawl): Brawl.Result {
             println("$defender dies")
         }
 
+        if (brawl.board1.isEmpty() && brawl.board2.isEmpty()) return TIE
         if (brawl.board1.hasNoAttackers() && brawl.board2.hasNoAttackers()) return TIE
-        if (brawl.board1.hasNoAttackers()) return BOARD2_WIN
-        if (brawl.board2.hasNoAttackers()) return BOARD1_WIN
+        if (brawl.board1.isEmpty()) return BOARD2_WIN
+        if (brawl.board2.isEmpty()) return BOARD1_WIN
 
         attackingBoard.updateNextAttackerIndex(attacker)
 
@@ -67,8 +68,7 @@ class Simulator {
             board1.positions[4] = BABY_ROOT.toInstance(board1)
 
             val board2 = Board(SIR_GALAHAD)
-            board2.positions[0] = B_A_A_D_BILLY_GRUFF.toInstance(board2)
-            board2.positions[4] = B_A_A_D_BILLY_GRUFF.toInstance(board2)
+            board2.positions[0] = BABY_DRAGON.toInstance(board2)
 
             val brawl = Brawl(board1 = board1, board2 = board2)
 

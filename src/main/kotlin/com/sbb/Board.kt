@@ -11,6 +11,7 @@ data class Board(
 
     override fun toString() = hero.humanReadableName
 
+    fun isEmpty() = positions.all { it == null }
     fun hasNoAttackers() = positions.all { it == null || it.attack == 0L }
 
     fun getPositionOf(character: CharacterInstance) = positions.indexOf(character)
