@@ -48,14 +48,13 @@ enum class Character(
     ),
     ;
 
-    fun support(): Support? {
-        return keywords.singleOrNull { it is Support } as Support?
+    fun supports(): List<Support> {
+        return keywords.filterIsInstance<Support>()
     }
 
     fun onLastBreath(board: Board, position: Int) {
-        val lastBreath = keywords.singleOrNull { it is LastBreath } as LastBreath?
-            ?: return
-
-        lastBreath.onLastBreath(board, position)
+        for (lastBreath in keywords.filterIsInstance<LastBreath>()) {
+            lastBreath.onLastBreath(board, position)
+        }
     }
 }

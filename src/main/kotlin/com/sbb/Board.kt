@@ -41,10 +41,12 @@ data class Board(
 
     fun applySupport() {
         for (index in 4 until 7) {
-            val support = positions[index]?.character?.support() ?: continue
+            val supports = positions[index]?.character?.supports() ?: continue
 
             for (indexInFront in index.positionsInFront()) {
-                positions[indexInFront]?.applySupport(support)
+                for (support in supports) {
+                    positions[indexInFront]?.applySupport(support)
+                }
             }
         }
     }
@@ -58,7 +60,7 @@ private fun List<CharacterInstance?>.uniformDistribution(): Distribution<Charact
 }
 
 private fun Int.positionsInFront(): List<Int> {
-    return when(this) {
+    return when (this) {
         4 -> listOf(0, 1)
         5 -> listOf(1, 2)
         6 -> listOf(2, 3)
