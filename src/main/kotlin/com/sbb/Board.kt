@@ -16,11 +16,9 @@ data class Board(
     fun getPositionOf(character: CharacterInstance) = positions.indexOf(character)
 
     fun remove(character: CharacterInstance) {
-        for (index in positions.indices) {
-            if (positions[index] == character) {
-                positions[index] = null
-            }
-        }
+        val position = getPositionOf(character)
+        positions[position] = null
+        character.character.onLastBreath(this, position)
     }
 
     var nextAttackerIndex: Int = 0

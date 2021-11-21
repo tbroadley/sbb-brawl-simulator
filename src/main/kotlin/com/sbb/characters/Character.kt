@@ -1,7 +1,7 @@
 package com.sbb.characters
 
-import com.sbb.characters.Keyword.FLYING
-import com.sbb.characters.Keyword.SUPPORT
+import com.sbb.Board
+import com.sbb.characters.Keyword.*
 
 enum class Character(
     val humanReadableName: String,
@@ -26,6 +26,21 @@ enum class Character(
         baseHealth = 3,
         keywords = listOf(SUPPORT(health = 3)),
     ),
+    BLACK_CAT(
+        humanReadableName = "Black Cat",
+        baseAttack = 1,
+        baseHealth = 1,
+        keywords = listOf(
+            LAST_BREATH { board, position ->
+                board.positions[position] = CAT.toInstance(board)
+            },
+        ),
+    ),
+    CAT(
+        humanReadableName = "Cat",
+        baseAttack = 1,
+        baseHealth = 1,
+    ),
     TINY(
         humanReadableName = "Tiny",
         baseAttack = 6,
@@ -35,5 +50,12 @@ enum class Character(
 
     fun support(): SUPPORT? {
         return keywords.singleOrNull { it is SUPPORT } as SUPPORT?
+    }
+
+    fun onLastBreath(board: Board, position: Int) {
+        val lastBreath = keywords.singleOrNull { it is LAST_BREATH } as LAST_BREATH?
+            ?: return
+
+        lastBreath.onLastBreath(board, position)
     }
 }
