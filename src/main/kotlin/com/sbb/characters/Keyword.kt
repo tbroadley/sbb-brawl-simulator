@@ -1,5 +1,5 @@
 package com.sbb.characters
 
-enum class Keyword {
-    FLYING,
+sealed class Keyword {
+    object FLYING : Keyword()
 }
