@@ -228,6 +228,29 @@ internal class BoardTest {
     }
 
     @Test
+    fun `removing a unit with trait-based supports removes them from matching units`() {
+        val board = Board(APOCALYPSE)
+
+        val fanny = FANNY.toInstance(board)
+
+        board.positions[0] = TINY.toInstance(board, attack = 8, health = 3)
+        board.positions[1] = B_A_A_D_BILLY_GRUFF.toInstance(board)
+        board.positions[4] = fanny
+
+        board.remove(fanny)
+
+        with(board.positions[0]!!) {
+            assertEquals(6, attack)
+            assertEquals(1, health)
+        }
+        with(board.positions[1]!!) {
+            assertEquals(2, attack)
+            assertEquals(3, health)
+        }
+        assertNull(board.positions[4])
+    }
+
+    @Test
     fun `empty board has no attackers`() {
         assertTrue(Board(APOCALYPSE).hasNoAttackers())
     }

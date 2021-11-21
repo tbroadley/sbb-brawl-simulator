@@ -2,6 +2,7 @@ package com.sbb.characters
 
 import com.sbb.Board
 import com.sbb.characters.Keyword.*
+import com.sbb.characters.Trait.DWARF
 import com.sbb.positionsBehind
 
 enum class Character(
@@ -9,6 +10,7 @@ enum class Character(
     val baseAttack: Long,
     val baseHealth: Long,
     val keywords: List<Keyword> = listOf(),
+    val traits: List<Trait> = listOf(),
 ) {
     B_A_A_D_BILLY_GRUFF(
         humanReadableName = "B-a-a-d Billy Gruff",
@@ -44,6 +46,11 @@ enum class Character(
             },
         ),
     ),
+    CAT(
+        humanReadableName = "Cat",
+        baseAttack = 1,
+        baseHealth = 1,
+    ),
     BLIND_MOUSE(
         humanReadableName = "Blind Mouse",
         baseAttack = 2,
@@ -58,16 +65,26 @@ enum class Character(
         humanReadableName = "Crafty",
         baseAttack = 1,
         baseHealth = 1,
+        traits = listOf(DWARF),
     ),
-    CAT(
-        humanReadableName = "Cat",
-        baseAttack = 1,
-        baseHealth = 1,
+    FANNY(
+        humanReadableName = "Fanny",
+        baseAttack = 2,
+        baseHealth = 2,
+        keywords = listOf(
+            Support(
+                attack = 2,
+                health = 2,
+                traits = listOf(DWARF)
+            )
+        ),
+        traits = listOf(DWARF),
     ),
     TINY(
         humanReadableName = "Tiny",
         baseAttack = 6,
         baseHealth = 1,
+        traits = listOf(DWARF),
     ),
     ;
 

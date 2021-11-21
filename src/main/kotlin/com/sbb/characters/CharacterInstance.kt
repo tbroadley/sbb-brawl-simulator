@@ -16,13 +16,26 @@ class CharacterInstance(
     }
 
     fun applySupport(support: Support) {
+        if (!hasMatchingTrait(support)) return
+
+        attack += support.attack
         health += support.health
     }
 
     fun removeSupport(support: Support) {
+        if (!hasMatchingTrait(support)) return
+
+        // TODO I think this is incorrect. Research what actually happens in game.
+        attack -= support.attack
+        attack = attack.coerceAtLeast(0)
+
         // TODO I think this is incorrect. Research what actually happens in game.
         health -= support.health
         health = health.coerceAtLeast(1)
+    }
+
+    private fun hasMatchingTrait(support: Support): Boolean {
+        return support.traits == null || support.traits.intersect(character.traits).isNotEmpty()
     }
 }
 
