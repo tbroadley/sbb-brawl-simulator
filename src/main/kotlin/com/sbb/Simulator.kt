@@ -71,9 +71,8 @@ class Simulator {
             board2.positions[4] = B_A_A_D_BILLY_GRUFF.toInstance(board2)
 
             val brawl = Brawl(board1 = board1, board2 = board2)
-            val result = simulate(brawl)
 
-            when(result) {
+            when(simulate(brawl)) {
                 BOARD1_WIN -> {
                     println("$board1 wins")
                 }
