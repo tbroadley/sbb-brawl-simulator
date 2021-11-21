@@ -4,10 +4,10 @@ import com.sbb.Brawl.Result.*
 import com.sbb.Hero.APOCALYPSE
 import com.sbb.Hero.SIR_GALAHAD
 import com.sbb.Keyword.FLYING
-import kotlin.random.Random
+import com.sbb.probability.Distribution
 
 fun simulate(brawl: Brawl): Brawl.Result {
-    var attackingBoard = if (Random.nextBoolean()) brawl.board1 else brawl.board2
+    var attackingBoard = Distribution(brawl.board1 to 0.5, brawl.board2 to 0.5).sample()
     println("$attackingBoard goes first")
 
     while (true) {
@@ -15,11 +15,12 @@ fun simulate(brawl: Brawl): Brawl.Result {
 
         val attacker = attackingBoard.nextAttacker()
 
-        val defender = if (FLYING in attacker.character.keywords) {
-            defendingBoard.randomBackRowCharacter()
+        val defenderDistribution = if (FLYING in attacker.character.keywords) {
+            defendingBoard.backRowCharacterDistribution()
         } else {
-            defendingBoard.randomFrontRowCharacter()
-        } ?: defendingBoard.randomCharacter()!!
+            defendingBoard.frontRowCharacterDistribution()
+        }
+        val defender = defenderDistribution.sample() ?: defendingBoard.characterDistribution().sample()!!
 
         println("$attacker attacks $defender")
 

@@ -1,6 +1,6 @@
 package com.sbb
 
-import kotlin.random.Random
+import com.sbb.probability.Distribution
 
 data class Board(
     val hero: Hero,
@@ -18,9 +18,9 @@ data class Board(
 
     fun nextAttacker() = positions[nextAttackerIndex]!!
 
-    fun randomFrontRowCharacter() = positions.take(4).randomCharacter()
-    fun randomBackRowCharacter() = positions.drop(4).randomCharacter()
-    fun randomCharacter(): CharacterInstance? = positions.randomCharacter()
+    fun frontRowCharacterDistribution() = positions.take(4).uniformDistribution()
+    fun backRowCharacterDistribution() = positions.drop(4).uniformDistribution()
+    fun characterDistribution() = positions.uniformDistribution()
 
     fun remove(character: CharacterInstance) {
         for (index in positions.indices) {
@@ -42,15 +42,9 @@ data class Board(
     }
 }
 
-private fun List<CharacterInstance?>.randomCharacter(): CharacterInstance? {
+private fun List<CharacterInstance?>.uniformDistribution(): Distribution<CharacterInstance?> {
     val characters = filterNotNull()
-    if (characters.isEmpty()) return null
+    if (characters.isEmpty()) return Distribution(null to 1.0)
 
-    return characters[Random.nextInt(characters.size)]
-}
-
-private fun <T> List<T>.padEnd(length: Int, padWith: T): List<T> {
-    if (length <= this.size) return this
-
-    return this + List(length - this.size) { padWith }
+    return Distribution(characters.associateWith { 1.0 / characters.size })
 }
