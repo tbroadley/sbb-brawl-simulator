@@ -11,17 +11,9 @@ data class Board(
 
     override fun toString() = hero.humanReadableName
 
-    fun getPositionOf(character: CharacterInstance) = positions.indexOf(character)
-
-    var nextAttackerIndex: Int = 0
-
     fun isEmpty() = positions.all { it == null }
 
-    fun nextAttacker() = positions[nextAttackerIndex]!!
-
-    fun frontRowCharacterDistribution() = positions.take(4).uniformDistribution()
-    fun backRowCharacterDistribution() = positions.drop(4).uniformDistribution()
-    fun characterDistribution() = positions.uniformDistribution()
+    fun getPositionOf(character: CharacterInstance) = positions.indexOf(character)
 
     fun remove(character: CharacterInstance) {
         for (index in positions.indices) {
@@ -31,6 +23,8 @@ data class Board(
         }
     }
 
+    var nextAttackerIndex: Int = 0
+    fun nextAttacker() = positions[nextAttackerIndex]!!
     fun updateNextAttackerIndex(attacker: CharacterInstance) {
         check(!isEmpty()) { "Board has no next attacker" }
 
@@ -42,6 +36,10 @@ data class Board(
             nextAttackerIndex %= positions.size
         }
     }
+
+    fun frontRowCharacterDistribution() = positions.take(4).uniformDistribution()
+    fun backRowCharacterDistribution() = positions.drop(4).uniformDistribution()
+    fun characterDistribution() = positions.uniformDistribution()
 }
 
 private fun List<CharacterInstance?>.uniformDistribution(): Distribution<CharacterInstance?> {
