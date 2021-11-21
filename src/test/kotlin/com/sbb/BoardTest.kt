@@ -1,12 +1,13 @@
 package com.sbb
 
+import com.sbb.Hero.APOCALYPSE
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class BoardTest {
     @Test
     fun `next attacker is correctly calculated when the attacker survives`() {
-        val board = Board()
+        val board = Board(APOCALYPSE)
 
         val attacker = Character.TINY.toInstance(board)
         val nextAttacker = Character.TINY.toInstance(board)
@@ -21,7 +22,7 @@ internal class BoardTest {
 
     @Test
     fun `next attacker is correctly calculated when the attacker dies`() {
-        val board = Board()
+        val board = Board(APOCALYPSE)
 
         val attacker = Character.TINY.toInstance(board)
         val nextAttacker = Character.TINY.toInstance(board)
@@ -35,7 +36,7 @@ internal class BoardTest {
 
     @Test
     fun `next attacker is correctly calculated when another unit replaces the dead attacker`() {
-        val board = Board()
+        val board = Board(APOCALYPSE)
 
         val attacker = Character.TINY.toInstance(board)
         val replacement = Character.B_A_A_D_BILLY_GRUFF.toInstance(board)
@@ -51,7 +52,7 @@ internal class BoardTest {
 
     @Test
     fun `next attacker is calculated correctly when there is a gap`() {
-        val board = Board()
+        val board = Board(APOCALYPSE)
 
         val firstAttacker = Character.TINY.toInstance(board)
         val secondAttacker = Character.B_A_A_D_BILLY_GRUFF.toInstance(board)
@@ -76,7 +77,7 @@ internal class BoardTest {
 
     @Test
     fun `correct character is removed`() {
-        val board = Board()
+        val board = Board(APOCALYPSE)
 
         val character1 = Character.TINY.toInstance(board)
         val character2 = Character.TINY.toInstance(board)

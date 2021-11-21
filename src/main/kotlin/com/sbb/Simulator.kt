@@ -1,6 +1,8 @@
 package com.sbb
 
 import com.sbb.Brawl.Result.*
+import com.sbb.Hero.APOCALYPSE
+import com.sbb.Hero.SIR_GALAHAD
 import kotlin.random.Random
 
 fun simulate(brawl: Brawl): Brawl.Result {
@@ -40,10 +42,10 @@ class Simulator {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            val board1 = Board()
+            val board1 = Board(APOCALYPSE)
             board1.positions[0] = Character.B_A_A_D_BILLY_GRUFF.toInstance(board1)
 
-            val board2 = Board()
+            val board2 = Board(SIR_GALAHAD)
             board2.positions[0] = Character.B_A_A_D_BILLY_GRUFF.toInstance(board2)
             board2.positions[1] = Character.B_A_A_D_BILLY_GRUFF.toInstance(board2)
 

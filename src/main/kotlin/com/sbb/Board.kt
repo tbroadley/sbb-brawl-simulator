@@ -3,9 +3,10 @@ package com.sbb
 import kotlin.random.Random
 
 data class Board(
+    val hero: Hero,
     val positions: MutableList<CharacterInstance?>,
 ) {
-    constructor() : this(arrayOfNulls<CharacterInstance>(7).toMutableList())
+    constructor(hero: Hero) : this(hero, arrayOfNulls<CharacterInstance>(7).toMutableList())
 
     fun getPositionOf(character: CharacterInstance) = positions.indexOf(character)
 
