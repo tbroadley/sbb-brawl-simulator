@@ -19,6 +19,12 @@ class CharacterInstance(
     fun applySupport(support: Support) {
         health += support.health
     }
+
+    fun removeSupport(support: Support) {
+        // TODO I think this is incorrect. Research what actually happens in game.
+        health -= support.health
+        health = health.coerceAtLeast(1)
+    }
 }
 
 fun Character.toInstance(board: Board) = CharacterInstance(board, this)

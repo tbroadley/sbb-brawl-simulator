@@ -19,6 +19,13 @@ data class Board(
     fun remove(character: CharacterInstance) {
         val position = getPositionOf(character)
         positions[position] = null
+
+        for (indexInFront in position.positionsInFront()) {
+            for (support in character.character.supports()) {
+                positions[indexInFront]?.removeSupport(support)
+            }
+        }
+
         character.character.onLastBreath(this, position)
     }
 
