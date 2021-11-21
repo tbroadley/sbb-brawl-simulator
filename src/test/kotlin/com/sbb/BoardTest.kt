@@ -4,7 +4,7 @@ import com.sbb.Hero.APOCALYPSE
 import com.sbb.characters.Character.*
 import com.sbb.characters.toInstance
 import com.sbb.probability.Distribution
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 internal class BoardTest {
@@ -227,5 +227,25 @@ internal class BoardTest {
             assertEquals(0, attack)
             assertEquals(3, health)
         }
+    }
+
+    @Test
+    fun `empty board has no attackers`() {
+        assertTrue(Board(APOCALYPSE).hasNoAttackers())
+    }
+
+    @Test
+    fun `board with only zero-attack units has no attackers`() {
+        val board = Board(APOCALYPSE)
+        board.positions[0] = BABY_ROOT.toInstance(board)
+        assertTrue(board.hasNoAttackers())
+    }
+
+    @Test
+    fun `board with non-zero-attack units has attackers`() {
+        val board = Board(APOCALYPSE)
+        board.positions[0] = BABY_ROOT.toInstance(board)
+        board.positions[1] = TINY.toInstance(board)
+        assertFalse(board.hasNoAttackers())
     }
 }

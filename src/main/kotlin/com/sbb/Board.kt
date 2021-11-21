@@ -11,7 +11,7 @@ data class Board(
 
     override fun toString() = hero.humanReadableName
 
-    fun isEmpty() = positions.all { it == null }
+    fun hasNoAttackers() = positions.all { it == null || it.attack == 0L }
 
     fun getPositionOf(character: CharacterInstance) = positions.indexOf(character)
 
@@ -22,9 +22,9 @@ data class Board(
     }
 
     var nextAttackerIndex: Int = 0
-    fun nextAttacker() = positions[nextAttackerIndex]!!
+    fun nextAttacker() = positions[nextAttackerIndex]
     fun updateNextAttackerIndex(attacker: CharacterInstance) {
-        check(!isEmpty()) { "Board has no next attacker" }
+        check(!hasNoAttackers()) { "Board has no next attacker" }
 
         for (index in 0 until 7) {
             val nextAttacker = positions[nextAttackerIndex]
