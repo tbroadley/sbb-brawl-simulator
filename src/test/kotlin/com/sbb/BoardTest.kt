@@ -102,7 +102,7 @@ internal class BoardTest {
     }
 
     @Test
-    fun `distributions are correct for board with no front-row characters`() {
+    fun `distributions are correct for empty board`() {
         val board = Board(APOCALYPSE)
 
         assertEquals(Distribution.from(null to 1.0), board.characterDistribution())
@@ -129,5 +129,54 @@ internal class BoardTest {
             board.frontRowCharacterDistribution(),
         )
         assertEquals(Distribution.from(null to 1.0), board.backRowCharacterDistribution())
+    }
+
+    @Test
+    fun `distributions are correct for board with only back-row characters`() {
+        val board = Board(APOCALYPSE)
+
+        val character1 = Character.TINY.toInstance(board)
+        val character2 = Character.BABY_DRAGON.toInstance(board)
+        val character3 = Character.B_A_A_D_BILLY_GRUFF.toInstance(board)
+
+        board.positions[4] = character1
+        board.positions[5] = character2
+        board.positions[6] = character3
+
+        assertEquals(
+            Distribution.from(character1 to 1.0 / 3, character2 to 1.0 / 3, character3 to 1.0 / 3),
+            board.characterDistribution(),
+        )
+        assertEquals(Distribution.from(null to 1.0), board.frontRowCharacterDistribution())
+        assertEquals(
+            Distribution.from(character1 to 1.0 / 3, character2 to 1.0 / 3, character3 to 1.0 / 3),
+            board.backRowCharacterDistribution(),
+        )
+    }
+
+    @Test
+    fun `distributions are correct for board with a mix of front- and back-row characters`() {
+        val board = Board(APOCALYPSE)
+
+        val character1 = Character.TINY.toInstance(board)
+        val character2 = Character.BABY_DRAGON.toInstance(board)
+        val character3 = Character.B_A_A_D_BILLY_GRUFF.toInstance(board)
+
+        board.positions[0] = character1
+        board.positions[3] = character2
+        board.positions[5] = character3
+
+        assertEquals(
+            Distribution.from(character1 to 1.0 / 3, character2 to 1.0 / 3, character3 to 1.0 / 3),
+            board.characterDistribution(),
+        )
+        assertEquals(
+            Distribution.from(
+                character1 to 0.5,
+                character2 to 0.5,
+            ),
+            board.frontRowCharacterDistribution(),
+        )
+        assertEquals(Distribution.from(character3 to 1.0), board.backRowCharacterDistribution())
     }
 }
