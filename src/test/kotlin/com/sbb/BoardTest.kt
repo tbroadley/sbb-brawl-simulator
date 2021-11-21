@@ -64,5 +64,9 @@ internal class BoardTest {
         board.updateNextAttackerIndex(secondAttacker)
         assertEquals(thirdAttacker, board.nextAttacker())
         assertEquals(6, board.nextAttackerIndex)
+
+        board.updateNextAttackerIndex(thirdAttacker)
+        assertEquals(firstAttacker, board.nextAttacker())
+        assertEquals(0, board.nextAttackerIndex)
     }
 }
