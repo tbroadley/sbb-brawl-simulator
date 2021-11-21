@@ -1,5 +1,6 @@
 package com.sbb
 
+import com.sbb.characters.CharacterInstance
 import com.sbb.probability.Distribution
 
 data class Board(

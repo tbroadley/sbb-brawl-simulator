@@ -1,6 +1,8 @@
 package com.sbb
 
 import com.sbb.Hero.APOCALYPSE
+import com.sbb.characters.Character.*
+import com.sbb.characters.toInstance
 import com.sbb.probability.Distribution
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -10,8 +12,8 @@ internal class BoardTest {
     fun `next attacker is correctly calculated when the attacker survives`() {
         val board = Board(APOCALYPSE)
 
-        val attacker = Character.TINY.toInstance(board)
-        val nextAttacker = Character.TINY.toInstance(board)
+        val attacker = TINY.toInstance(board)
+        val nextAttacker = TINY.toInstance(board)
 
         board.positions[0] = attacker
         board.positions[1] = nextAttacker
@@ -25,8 +27,8 @@ internal class BoardTest {
     fun `next attacker is correctly calculated when the attacker dies`() {
         val board = Board(APOCALYPSE)
 
-        val attacker = Character.TINY.toInstance(board)
-        val nextAttacker = Character.TINY.toInstance(board)
+        val attacker = TINY.toInstance(board)
+        val nextAttacker = TINY.toInstance(board)
 
         board.positions[1] = nextAttacker
 
@@ -39,9 +41,9 @@ internal class BoardTest {
     fun `next attacker is correctly calculated when another unit replaces the dead attacker`() {
         val board = Board(APOCALYPSE)
 
-        val attacker = Character.TINY.toInstance(board)
-        val replacement = Character.B_A_A_D_BILLY_GRUFF.toInstance(board)
-        val nextAttacker = Character.TINY.toInstance(board)
+        val attacker = TINY.toInstance(board)
+        val replacement = B_A_A_D_BILLY_GRUFF.toInstance(board)
+        val nextAttacker = TINY.toInstance(board)
 
         board.positions[0] = replacement
         board.positions[1] = nextAttacker
@@ -55,9 +57,9 @@ internal class BoardTest {
     fun `next attacker is calculated correctly when there is a gap`() {
         val board = Board(APOCALYPSE)
 
-        val firstAttacker = Character.TINY.toInstance(board)
-        val secondAttacker = Character.B_A_A_D_BILLY_GRUFF.toInstance(board)
-        val thirdAttacker = Character.TINY.toInstance(board)
+        val firstAttacker = TINY.toInstance(board)
+        val secondAttacker = B_A_A_D_BILLY_GRUFF.toInstance(board)
+        val thirdAttacker = TINY.toInstance(board)
 
         board.positions[0] = firstAttacker
         board.positions[2] = secondAttacker
@@ -80,8 +82,8 @@ internal class BoardTest {
     fun `correct character is removed`() {
         val board = Board(APOCALYPSE)
 
-        val character1 = Character.TINY.toInstance(board)
-        val character2 = Character.TINY.toInstance(board)
+        val character1 = TINY.toInstance(board)
+        val character2 = TINY.toInstance(board)
 
         board.positions[0] = character1
         board.positions[2] = character2
@@ -114,8 +116,8 @@ internal class BoardTest {
     fun `distributions are correct for board with only front-row characters`() {
         val board = Board(APOCALYPSE)
 
-        val character1 = Character.TINY.toInstance(board)
-        val character2 = Character.BABY_DRAGON.toInstance(board)
+        val character1 = TINY.toInstance(board)
+        val character2 = BABY_DRAGON.toInstance(board)
 
         board.positions[0] = character1
         board.positions[2] = character2
@@ -135,9 +137,9 @@ internal class BoardTest {
     fun `distributions are correct for board with only back-row characters`() {
         val board = Board(APOCALYPSE)
 
-        val character1 = Character.TINY.toInstance(board)
-        val character2 = Character.BABY_DRAGON.toInstance(board)
-        val character3 = Character.B_A_A_D_BILLY_GRUFF.toInstance(board)
+        val character1 = TINY.toInstance(board)
+        val character2 = BABY_DRAGON.toInstance(board)
+        val character3 = B_A_A_D_BILLY_GRUFF.toInstance(board)
 
         board.positions[4] = character1
         board.positions[5] = character2
@@ -158,9 +160,9 @@ internal class BoardTest {
     fun `distributions are correct for board with a mix of front- and back-row characters`() {
         val board = Board(APOCALYPSE)
 
-        val character1 = Character.TINY.toInstance(board)
-        val character2 = Character.BABY_DRAGON.toInstance(board)
-        val character3 = Character.B_A_A_D_BILLY_GRUFF.toInstance(board)
+        val character1 = TINY.toInstance(board)
+        val character2 = BABY_DRAGON.toInstance(board)
+        val character3 = B_A_A_D_BILLY_GRUFF.toInstance(board)
 
         board.positions[0] = character1
         board.positions[3] = character2

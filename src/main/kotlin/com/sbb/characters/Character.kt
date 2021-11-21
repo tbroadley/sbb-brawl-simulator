@@ -1,6 +1,6 @@
-package com.sbb
+package com.sbb.characters
 
-import com.sbb.Keyword.FLYING
+import com.sbb.characters.Keyword.FLYING
 
 enum class Character(
     val humanReadableName: String,

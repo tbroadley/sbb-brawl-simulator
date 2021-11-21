@@ -3,7 +3,11 @@ package com.sbb
 import com.sbb.Brawl.Result.*
 import com.sbb.Hero.APOCALYPSE
 import com.sbb.Hero.SIR_GALAHAD
-import com.sbb.Keyword.FLYING
+import com.sbb.characters.Character
+import com.sbb.characters.Character.BABY_DRAGON
+import com.sbb.characters.Character.B_A_A_D_BILLY_GRUFF
+import com.sbb.characters.Keyword.FLYING
+import com.sbb.characters.toInstance
 import com.sbb.probability.Distribution
 
 fun simulate(brawl: Brawl): Brawl.Result {
@@ -50,11 +54,11 @@ class Simulator {
         @JvmStatic
         fun main(args: Array<String>) {
             val board1 = Board(APOCALYPSE)
-            board1.positions[0] = Character.BABY_DRAGON.toInstance(board1)
+            board1.positions[0] = BABY_DRAGON.toInstance(board1)
 
             val board2 = Board(SIR_GALAHAD)
-            board2.positions[0] = Character.B_A_A_D_BILLY_GRUFF.toInstance(board2)
-            board2.positions[4] = Character.B_A_A_D_BILLY_GRUFF.toInstance(board2)
+            board2.positions[0] = B_A_A_D_BILLY_GRUFF.toInstance(board2)
+            board2.positions[4] = B_A_A_D_BILLY_GRUFF.toInstance(board2)
 
             val brawl = Brawl(board1 = board1, board2 = board2)
             println(simulate(brawl))

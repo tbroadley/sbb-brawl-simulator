@@ -1,4 +1,6 @@
-package com.sbb
+package com.sbb.characters
+
+import com.sbb.Board
 
 class CharacterInstance(
     private val board: Board,
