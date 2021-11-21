@@ -196,7 +196,31 @@ internal class BoardTest {
     }
 
     @Test
-    fun `summoning and removing a unit adds and  its supports`() {
+    fun `starting with a support doesn't add stats`() {
+        val board = Board(APOCALYPSE)
+
+        board.setStartingPositions(
+            0 to TINY.toInstance(board, attack = 6, health = 4),
+            1 to B_A_A_D_BILLY_GRUFF.toInstance(board, attack = 2, health = 6),
+            4 to BABY_ROOT.toInstance(board),
+        )
+
+        with(board.positions[0]!!) {
+            assertEquals(6, attack)
+            assertEquals(4, health)
+        }
+        with(board.positions[1]!!) {
+            assertEquals(2, attack)
+            assertEquals(6, health)
+        }
+        with(board.positions[4]!!) {
+            assertEquals(0, attack)
+            assertEquals(3, health)
+        }
+    }
+
+    @Test
+    fun `summoning and removing a unit adds and removes its supports`() {
         val board = Board(APOCALYPSE)
 
         val babyRoot = BABY_ROOT.toInstance(board)
