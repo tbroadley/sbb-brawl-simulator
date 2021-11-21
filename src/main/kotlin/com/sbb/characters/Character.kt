@@ -44,6 +44,16 @@ enum class Character(
             },
         ),
     ),
+    BLIND_MOUSE(
+        humanReadableName = "Blind Mouse",
+        baseAttack = 2,
+        baseHealth = 2,
+    ),
+    CINDER_ELLA(
+        humanReadableName = "Cinder-Ella",
+        baseAttack = 2,
+        baseHealth = 2,
+    ),
     CAT(
         humanReadableName = "Cat",
         baseAttack = 1,
