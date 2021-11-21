@@ -59,12 +59,23 @@ private fun List<CharacterInstance?>.uniformDistribution(): Distribution<Charact
     return Distribution.from(characters.associateWith { 1.0 / characters.size })
 }
 
-private fun Int.positionsInFront(): List<Int> {
+fun Int.positionsInFront(): List<Int> {
     return when (this) {
         4 -> listOf(0, 1)
         5 -> listOf(1, 2)
         6 -> listOf(2, 3)
         0, 1, 2, 3 -> listOf()
+        else -> throw IllegalArgumentException("$this is an invalid position index")
+    }
+}
+
+fun Int.positionsBehind(): List<Int> {
+    return when (this) {
+        0 -> listOf(4)
+        1 -> listOf(4, 5)
+        2 -> listOf(5, 6)
+        3 -> listOf(6)
+        4, 5, 6 -> listOf()
         else -> throw IllegalArgumentException("$this is an invalid position index")
     }
 }
