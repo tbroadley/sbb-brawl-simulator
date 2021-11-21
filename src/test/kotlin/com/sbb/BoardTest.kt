@@ -1,8 +1,8 @@
 package com.sbb
 
-import com.sbb.Hero.APOCALYPSE
 import com.sbb.characters.Character.*
 import com.sbb.characters.toInstance
+import com.sbb.heroes.Hero.APOCALYPSE
 import com.sbb.probability.Distribution
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test

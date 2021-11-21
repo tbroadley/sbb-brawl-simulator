@@ -1,6 +1,7 @@
 package com.sbb
 
 import com.sbb.characters.CharacterInstance
+import com.sbb.heroes.Hero
 import com.sbb.probability.Distribution
 import com.sbb.treasures.Treasure
 

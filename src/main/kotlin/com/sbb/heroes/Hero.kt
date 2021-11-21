@@ -1,4 +1,4 @@
-package com.sbb
+package com.sbb.heroes
 
 enum class Hero(
     val humanReadableName: String,

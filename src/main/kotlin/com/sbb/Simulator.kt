@@ -1,11 +1,11 @@
 package com.sbb
 
 import com.sbb.Brawl.Result.*
-import com.sbb.Hero.APOCALYPSE
-import com.sbb.Hero.SIR_GALAHAD
 import com.sbb.characters.Character.*
 import com.sbb.characters.Keyword.Flying
 import com.sbb.characters.toInstance
+import com.sbb.heroes.Hero.APOCALYPSE
+import com.sbb.heroes.Hero.SIR_GALAHAD
 import com.sbb.probability.Distribution
 
 fun simulate(brawl: Brawl): Brawl.Result {
