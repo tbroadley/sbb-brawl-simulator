@@ -69,4 +69,30 @@ internal class BoardTest {
         assertEquals(firstAttacker, board.nextAttacker())
         assertEquals(0, board.nextAttackerIndex)
     }
+
+    @Test
+    fun `correct character is removed`() {
+        val character1 = Character.TINY.toInstance()
+        val character2 = Character.TINY.toInstance()
+
+        val board = Board(
+            character1,
+            null,
+            character2,
+        )
+
+        board.remove(character1)
+        assertEquals(
+            listOf(
+                null,
+                null,
+                character2,
+                null,
+                null,
+                null,
+                null,
+            ),
+            board.positions
+        )
+    }
 }

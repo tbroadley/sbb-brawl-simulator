@@ -6,7 +6,7 @@ data class Board(
     val positions: MutableList<CharacterInstance?>,
 ) {
     constructor(vararg positions: CharacterInstance?) : this(
-        (positions.toList() + arrayOfNulls<CharacterInstance>(7 - positions.size)).toMutableList()
+        positions.toList().padEnd(7, null).toMutableList(),
     )
 
     var nextAttackerIndex: Int = 0
@@ -38,9 +38,15 @@ data class Board(
     }
 }
 
-fun List<CharacterInstance?>.randomCharacter(): CharacterInstance? {
+private fun List<CharacterInstance?>.randomCharacter(): CharacterInstance? {
     val characters = filterNotNull()
     if (characters.isEmpty()) return null
 
     return characters[Random.nextInt(characters.size)]
+}
+
+private fun <T> List<T>.padEnd(length: Int, padWith: T): List<T> {
+    if (length <= this.size) return this
+
+    return this + List(length - this.size) { padWith }
 }
