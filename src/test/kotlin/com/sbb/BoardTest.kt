@@ -207,7 +207,6 @@ internal class BoardTest {
         board.positions[1] = B_A_A_D_BILLY_GRUFF.toInstance(board)
         board.positions[2] = TINY.toInstance(board)
         board.positions[4] = BABY_ROOT.toInstance(board)
-        board.positions[4] = BABY_ROOT.toInstance(board)
 
         board.applySupport()
 
@@ -227,6 +226,36 @@ internal class BoardTest {
             assertEquals(0, attack)
             assertEquals(3, health)
         }
+    }
+
+    @Test
+    fun `removing a unit removes its supports`() {
+        val board = Board(APOCALYPSE)
+
+        val babyRoot = BABY_ROOT.toInstance(board)
+
+        board.positions[0] = TINY.toInstance(board)
+        board.positions[1] = B_A_A_D_BILLY_GRUFF.toInstance(board)
+        board.positions[2] = TINY.toInstance(board)
+        board.positions[4] = babyRoot
+
+        board.applySupport()
+
+        board.remove(babyRoot)
+
+        with(board.positions[0]!!) {
+            assertEquals(6, attack)
+            assertEquals(1, health)
+        }
+        with(board.positions[1]!!) {
+            assertEquals(2, attack)
+            assertEquals(3, health)
+        }
+        with(board.positions[2]!!) {
+            assertEquals(6, attack)
+            assertEquals(1, health)
+        }
+        assertNull(board.positions[4])
     }
 
     @Test

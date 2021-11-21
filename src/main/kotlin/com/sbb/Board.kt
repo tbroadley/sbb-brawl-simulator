@@ -2,12 +2,17 @@ package com.sbb
 
 import com.sbb.characters.CharacterInstance
 import com.sbb.probability.Distribution
+import com.sbb.treasures.Treasure
 
 data class Board(
     val hero: Hero,
+    val treasures: List<Treasure> = listOf(),
     val positions: MutableList<CharacterInstance?>,
 ) {
-    constructor(hero: Hero) : this(hero, arrayOfNulls<CharacterInstance>(7).toMutableList())
+    constructor(hero: Hero) : this(
+        hero = hero,
+        positions = arrayOfNulls<CharacterInstance>(7).toMutableList()
+    )
 
     override fun toString() = hero.humanReadableName
 
