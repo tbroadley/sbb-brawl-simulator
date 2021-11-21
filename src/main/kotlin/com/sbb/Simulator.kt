@@ -13,7 +13,12 @@ fun simulate(brawl: Brawl): Brawl.Result {
         val attacker = attackingBoard.nextAttacker()
         val defender = defendingBoard.randomFrontRowCharacter() ?: defendingBoard.randomCharacter()!!
 
-        println("$attacker in position ${attackingBoard.nextAttackerIndex} attacks $defender")
+        println(
+            "${attacker.character.humanReadableName} " +
+                    "in position ${attackingBoard.nextAttackerIndex} " +
+                    "attacks ${defender.character.humanReadableName} " +
+                    "in position ${defendingBoard.getPositionOf(defender)}"
+        )
 
         defender.health -= attacker.attack
         attacker.health -= defender.attack

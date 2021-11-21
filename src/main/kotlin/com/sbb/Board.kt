@@ -9,6 +9,8 @@ data class Board(
         positions.toList().padEnd(7, null).toMutableList(),
     )
 
+    fun getPositionOf(character: CharacterInstance) = positions.indexOf(character)
+
     var nextAttackerIndex: Int = 0
 
     fun isEmpty() = positions.all { it == null }
