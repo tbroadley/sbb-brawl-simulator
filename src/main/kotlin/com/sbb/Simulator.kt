@@ -3,6 +3,7 @@ package com.sbb
 import com.sbb.Brawl.Result.*
 import com.sbb.Hero.APOCALYPSE
 import com.sbb.Hero.SIR_GALAHAD
+import com.sbb.Keyword.FLYING
 import kotlin.random.Random
 
 fun simulate(brawl: Brawl): Brawl.Result {
@@ -13,7 +14,12 @@ fun simulate(brawl: Brawl): Brawl.Result {
         val defendingBoard = if (attackingBoard == brawl.board1) brawl.board2 else brawl.board1
 
         val attacker = attackingBoard.nextAttacker()
-        val defender = defendingBoard.randomFrontRowCharacter() ?: defendingBoard.randomCharacter()!!
+
+        val defender = if (FLYING in attacker.character.keywords) {
+            defendingBoard.randomBackRowCharacter()
+        } else {
+            defendingBoard.randomFrontRowCharacter()
+        } ?: defendingBoard.randomCharacter()!!
 
         println("$attacker attacks $defender")
 
@@ -43,11 +49,11 @@ class Simulator {
         @JvmStatic
         fun main(args: Array<String>) {
             val board1 = Board(APOCALYPSE)
-            board1.positions[0] = Character.B_A_A_D_BILLY_GRUFF.toInstance(board1)
+            board1.positions[0] = Character.BABY_DRAGON.toInstance(board1)
 
             val board2 = Board(SIR_GALAHAD)
             board2.positions[0] = Character.B_A_A_D_BILLY_GRUFF.toInstance(board2)
-            board2.positions[1] = Character.B_A_A_D_BILLY_GRUFF.toInstance(board2)
+            board2.positions[4] = Character.B_A_A_D_BILLY_GRUFF.toInstance(board2)
 
             val brawl = Brawl(board1 = board1, board2 = board2)
             println(simulate(brawl))

@@ -19,6 +19,7 @@ data class Board(
     fun nextAttacker() = positions[nextAttackerIndex]!!
 
     fun randomFrontRowCharacter() = positions.take(4).randomCharacter()
+    fun randomBackRowCharacter() = positions.drop(4).randomCharacter()
     fun randomCharacter(): CharacterInstance? = positions.randomCharacter()
 
     fun remove(character: CharacterInstance) {
