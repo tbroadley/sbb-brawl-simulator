@@ -7,7 +7,7 @@ import com.sbb.Keyword.FLYING
 import com.sbb.probability.Distribution
 
 fun simulate(brawl: Brawl): Brawl.Result {
-    var attackingBoard = Distribution(brawl.board1 to 0.5, brawl.board2 to 0.5).sample()
+    var attackingBoard = Distribution.from(brawl.board1 to 0.5, brawl.board2 to 0.5).sample()
     println("$attackingBoard goes first")
 
     while (true) {

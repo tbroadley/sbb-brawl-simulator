@@ -44,7 +44,7 @@ data class Board(
 
 private fun List<CharacterInstance?>.uniformDistribution(): Distribution<CharacterInstance?> {
     val characters = filterNotNull()
-    if (characters.isEmpty()) return Distribution(null to 1.0)
+    if (characters.isEmpty()) return Distribution.from(null to 1.0)
 
-    return Distribution(characters.associateWith { 1.0 / characters.size })
+    return Distribution.from(characters.associateWith { 1.0 / characters.size })
 }

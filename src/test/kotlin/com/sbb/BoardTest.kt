@@ -1,6 +1,7 @@
 package com.sbb
 
 import com.sbb.Hero.APOCALYPSE
+import com.sbb.probability.Distribution
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -98,5 +99,35 @@ internal class BoardTest {
             ),
             board.positions
         )
+    }
+
+    @Test
+    fun `distributions are correct for board with no front-row characters`() {
+        val board = Board(APOCALYPSE)
+
+        assertEquals(Distribution.from(null to 1.0), board.characterDistribution())
+        assertEquals(Distribution.from(null to 1.0), board.frontRowCharacterDistribution())
+        assertEquals(Distribution.from(null to 1.0), board.backRowCharacterDistribution())
+    }
+
+    @Test
+    fun `distributions are correct for board with only front-row characters`() {
+        val board = Board(APOCALYPSE)
+
+        val character1 = Character.TINY.toInstance(board)
+        val character2 = Character.BABY_DRAGON.toInstance(board)
+
+        board.positions[0] = character1
+        board.positions[2] = character2
+
+        assertEquals(
+            Distribution.from(character1 to 0.5, character2 to 0.5),
+            board.characterDistribution(),
+        )
+        assertEquals(
+            Distribution.from(character1 to 0.5, character2 to 0.5),
+            board.frontRowCharacterDistribution(),
+        )
+        assertEquals(Distribution.from(null to 1.0), board.backRowCharacterDistribution())
     }
 }
