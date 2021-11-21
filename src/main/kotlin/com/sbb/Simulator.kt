@@ -3,10 +3,9 @@ package com.sbb
 import com.sbb.Brawl.Result.*
 import com.sbb.Hero.APOCALYPSE
 import com.sbb.Hero.SIR_GALAHAD
-import com.sbb.characters.Character
 import com.sbb.characters.Character.BABY_DRAGON
 import com.sbb.characters.Character.B_A_A_D_BILLY_GRUFF
-import com.sbb.characters.Keyword.FLYING
+import com.sbb.characters.Keyword.Flying
 import com.sbb.characters.toInstance
 import com.sbb.probability.Distribution
 
@@ -22,7 +21,7 @@ fun simulate(brawl: Brawl): Brawl.Result {
 
         val attacker = attackingBoard.nextAttacker()
 
-        val defenderDistribution = if (FLYING in attacker.character.keywords) {
+        val defenderDistribution = if (Flying in attacker.character.keywords) {
             defendingBoard.backRowCharacterDistribution()
         } else {
             defendingBoard.frontRowCharacterDistribution()

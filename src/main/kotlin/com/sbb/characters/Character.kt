@@ -18,20 +18,20 @@ enum class Character(
         humanReadableName = "Baby Dragon",
         baseAttack = 3,
         baseHealth = 2,
-        keywords = listOf(FLYING),
+        keywords = listOf(Flying),
     ),
     BABY_ROOT(
         humanReadableName = "Baby Root",
         baseAttack = 0,
         baseHealth = 3,
-        keywords = listOf(SUPPORT(health = 3)),
+        keywords = listOf(Support(health = 3)),
     ),
     BLACK_CAT(
         humanReadableName = "Black Cat",
         baseAttack = 1,
         baseHealth = 1,
         keywords = listOf(
-            LAST_BREATH { board, position ->
+            LastBreath { board, position ->
                 board.positions[position] = CAT.toInstance(board)
             },
         ),
@@ -48,12 +48,12 @@ enum class Character(
     ),
     ;
 
-    fun support(): SUPPORT? {
-        return keywords.singleOrNull { it is SUPPORT } as SUPPORT?
+    fun support(): Support? {
+        return keywords.singleOrNull { it is Support } as Support?
     }
 
     fun onLastBreath(board: Board, position: Int) {
-        val lastBreath = keywords.singleOrNull { it is LAST_BREATH } as LAST_BREATH?
+        val lastBreath = keywords.singleOrNull { it is LastBreath } as LastBreath?
             ?: return
 
         lastBreath.onLastBreath(board, position)

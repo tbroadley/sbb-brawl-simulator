@@ -1,7 +1,7 @@
 package com.sbb.characters
 
 import com.sbb.Board
-import com.sbb.characters.Keyword.SUPPORT
+import com.sbb.characters.Keyword.Support
 
 class CharacterInstance(
     private val board: Board,
@@ -16,7 +16,7 @@ class CharacterInstance(
                 "with $attack attack and $health health"
     }
 
-    fun applySupport(support: SUPPORT) {
+    fun applySupport(support: Support) {
         health += support.health
     }
 }
