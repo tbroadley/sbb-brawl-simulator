@@ -1,6 +1,7 @@
 package com.sbb.characters
 
 import com.sbb.Board
+import com.sbb.characters.Keyword.SUPPORT
 
 class CharacterInstance(
     private val board: Board,
@@ -13,6 +14,10 @@ class CharacterInstance(
         return "${board.hero.humanReadableName}'s ${character.humanReadableName} " +
                 "in position ${board.getPositionOf(this) + 1} " +
                 "with $attack attack and $health health"
+    }
+
+    fun applySupport(support: SUPPORT) {
+        health += support.health
     }
 }
 

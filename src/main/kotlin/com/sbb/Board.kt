@@ -40,6 +40,16 @@ data class Board(
     fun frontRowCharacterDistribution() = positions.take(4).uniformDistribution()
     fun backRowCharacterDistribution() = positions.drop(4).uniformDistribution()
     fun characterDistribution() = positions.uniformDistribution()
+
+    fun applySupport() {
+        for (index in 4 until 7) {
+            val support = positions[index]?.character?.support() ?: continue
+
+            for (indexInFront in index.positionsInFront()) {
+                positions[indexInFront]?.applySupport(support)
+            }
+        }
+    }
 }
 
 private fun List<CharacterInstance?>.uniformDistribution(): Distribution<CharacterInstance?> {
@@ -47,4 +57,14 @@ private fun List<CharacterInstance?>.uniformDistribution(): Distribution<Charact
     if (characters.isEmpty()) return Distribution.from(null to 1.0)
 
     return Distribution.from(characters.associateWith { 1.0 / characters.size })
+}
+
+private fun Int.positionsInFront(): List<Int> {
+    return when(this) {
+        4 -> listOf(0, 1)
+        5 -> listOf(1, 2)
+        6 -> listOf(2, 3)
+        0, 1, 2, 3 -> listOf()
+        else -> throw IllegalArgumentException("$this is an invalid position index")
+    }
 }

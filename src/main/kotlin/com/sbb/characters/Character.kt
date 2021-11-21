@@ -31,4 +31,9 @@ enum class Character(
         baseAttack = 6,
         baseHealth = 1,
     ),
+    ;
+
+    fun support(): SUPPORT? {
+        return keywords.singleOrNull { it is SUPPORT } as SUPPORT?
+    }
 }

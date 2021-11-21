@@ -11,6 +11,9 @@ import com.sbb.characters.toInstance
 import com.sbb.probability.Distribution
 
 fun simulate(brawl: Brawl): Brawl.Result {
+    brawl.board1.applySupport()
+    brawl.board2.applySupport()
+
     var attackingBoard = Distribution.from(brawl.board1 to 0.5, brawl.board2 to 0.5).sample()
     println("$attackingBoard goes first")
 
