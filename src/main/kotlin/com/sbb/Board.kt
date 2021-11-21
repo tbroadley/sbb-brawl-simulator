@@ -35,7 +35,8 @@ data class Board(
         check(!isEmpty()) { "Board has no next attacker" }
 
         for (index in 0 until 7) {
-            if (positions[nextAttackerIndex] != null && positions[nextAttackerIndex] != attacker) break
+            val nextAttacker = positions[nextAttackerIndex]
+            if (nextAttacker != null && nextAttacker != attacker && nextAttacker.attack > 0) break
 
             nextAttackerIndex += 1
             nextAttackerIndex %= positions.size

@@ -79,6 +79,23 @@ internal class BoardTest {
     }
 
     @Test
+    fun `attack order skips units with no attack`() {
+        val board = Board(APOCALYPSE)
+
+        val firstAttacker = TINY.toInstance(board)
+        val babyRoot = BABY_ROOT.toInstance(board)
+        val secondAttacker = TINY.toInstance(board)
+
+        board.positions[0] = firstAttacker
+        board.positions[1] = babyRoot
+        board.positions[2] = secondAttacker
+
+        board.updateNextAttackerIndex(firstAttacker)
+        assertEquals(secondAttacker, board.nextAttacker())
+        assertEquals(2, board.nextAttackerIndex)
+    }
+
+    @Test
     fun `correct character is removed`() {
         val board = Board(APOCALYPSE)
 
