@@ -6,8 +6,8 @@ import com.sbb.characters.Keyword.Support
 class CharacterInstance(
     private val board: Board,
     val character: Character,
-    var attack: Long = character.baseAttack,
-    var health: Long = character.baseHealth,
+    var attack: Long,
+    var health: Long,
 ) {
     override fun toString(): String {
         return "${board.hero.humanReadableName}'s ${character.humanReadableName} " +
@@ -38,8 +38,6 @@ class CharacterInstance(
         return support.traits == null || support.traits.intersect(character.traits).isNotEmpty()
     }
 }
-
-fun Character.toInstance(board: Board) = CharacterInstance(board, this)
 
 fun Character.toInstance(board: Board, attack: Long, health: Long): CharacterInstance {
     return CharacterInstance(

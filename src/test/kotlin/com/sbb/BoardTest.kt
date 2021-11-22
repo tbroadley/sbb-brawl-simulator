@@ -12,8 +12,8 @@ internal class BoardTest {
     fun `next attacker is correctly calculated when the attacker survives`() {
         val board = Board(APOCALYPSE)
 
-        val attacker = TINY.toInstance(board)
-        val nextAttacker = TINY.toInstance(board)
+        val attacker = TINY.toInstance(board, attack = 6, health = 1)
+        val nextAttacker = TINY.toInstance(board, attack = 6, health = 1)
 
         board.setStartingPositions(0 to attacker, 1 to nextAttacker)
 
@@ -26,8 +26,8 @@ internal class BoardTest {
     fun `next attacker is correctly calculated when the attacker dies`() {
         val board = Board(APOCALYPSE)
 
-        val attacker = TINY.toInstance(board)
-        val nextAttacker = TINY.toInstance(board)
+        val attacker = TINY.toInstance(board, attack = 6, health = 1)
+        val nextAttacker = TINY.toInstance(board, attack = 6, health = 1)
 
         board.setStartingPositions(1 to nextAttacker)
 
@@ -40,9 +40,9 @@ internal class BoardTest {
     fun `next attacker is correctly calculated when another unit replaces the dead attacker`() {
         val board = Board(APOCALYPSE)
 
-        val attacker = TINY.toInstance(board)
-        val replacement = B_A_A_D_BILLY_GRUFF.toInstance(board)
-        val nextAttacker = TINY.toInstance(board)
+        val attacker = TINY.toInstance(board, attack = 6, health = 1)
+        val replacement = B_A_A_D_BILLY_GRUFF.toInstance(board, attack = 2, health = 3)
+        val nextAttacker = TINY.toInstance(board, attack = 6, health = 1)
 
         board.setStartingPositions(0 to replacement, 1 to nextAttacker)
 
@@ -55,9 +55,9 @@ internal class BoardTest {
     fun `next attacker is calculated correctly when there is a gap`() {
         val board = Board(APOCALYPSE)
 
-        val firstAttacker = TINY.toInstance(board)
-        val secondAttacker = B_A_A_D_BILLY_GRUFF.toInstance(board)
-        val thirdAttacker = TINY.toInstance(board)
+        val firstAttacker = TINY.toInstance(board, attack = 6, health = 1)
+        val secondAttacker = B_A_A_D_BILLY_GRUFF.toInstance(board, attack = 2, health = 3)
+        val thirdAttacker = TINY.toInstance(board, attack = 6, health = 1)
 
         board.setStartingPositions(0 to firstAttacker, 2 to secondAttacker, 6 to thirdAttacker)
 
@@ -78,9 +78,9 @@ internal class BoardTest {
     fun `attack order skips units with no attack`() {
         val board = Board(APOCALYPSE)
 
-        val firstAttacker = TINY.toInstance(board)
-        val babyRoot = BABY_ROOT.toInstance(board)
-        val secondAttacker = TINY.toInstance(board)
+        val firstAttacker = TINY.toInstance(board, attack = 6, health = 1)
+        val babyRoot = BABY_ROOT.toInstance(board, attack = 0, health = 3)
+        val secondAttacker = TINY.toInstance(board, attack = 6, health = 1)
 
         board.setStartingPositions(0 to firstAttacker, 1 to babyRoot, 2 to secondAttacker)
 
@@ -93,8 +93,8 @@ internal class BoardTest {
     fun `correct character is removed`() {
         val board = Board(APOCALYPSE)
 
-        val character1 = TINY.toInstance(board)
-        val character2 = TINY.toInstance(board)
+        val character1 = TINY.toInstance(board, attack = 6, health = 1)
+        val character2 = TINY.toInstance(board, attack = 6, health = 1)
 
         board.setStartingPositions(0 to character1, 2 to character2)
 
@@ -126,8 +126,8 @@ internal class BoardTest {
     fun `distributions are correct for board with only front-row characters`() {
         val board = Board(APOCALYPSE)
 
-        val character1 = TINY.toInstance(board)
-        val character2 = BABY_DRAGON.toInstance(board)
+        val character1 = TINY.toInstance(board, attack = 6, health = 1)
+        val character2 = BABY_DRAGON.toInstance(board, attack = 3, health = 2)
 
         board.setStartingPositions(0 to character1, 2 to character2)
 
@@ -146,9 +146,9 @@ internal class BoardTest {
     fun `distributions are correct for board with only back-row characters`() {
         val board = Board(APOCALYPSE)
 
-        val character1 = TINY.toInstance(board)
-        val character2 = BABY_DRAGON.toInstance(board)
-        val character3 = B_A_A_D_BILLY_GRUFF.toInstance(board)
+        val character1 = TINY.toInstance(board, attack = 6, health = 1)
+        val character2 = BABY_DRAGON.toInstance(board, attack = 3, health = 2)
+        val character3 = B_A_A_D_BILLY_GRUFF.toInstance(board, attack = 2, health = 3)
 
         board.setStartingPositions(
             4 to character1,
@@ -171,9 +171,9 @@ internal class BoardTest {
     fun `distributions are correct for board with a mix of front- and back-row characters`() {
         val board = Board(APOCALYPSE)
 
-        val character1 = TINY.toInstance(board)
-        val character2 = BABY_DRAGON.toInstance(board)
-        val character3 = B_A_A_D_BILLY_GRUFF.toInstance(board)
+        val character1 = TINY.toInstance(board, attack = 6, health = 1)
+        val character2 = BABY_DRAGON.toInstance(board, attack = 3, health = 2)
+        val character3 = B_A_A_D_BILLY_GRUFF.toInstance(board, attack = 2, health = 3)
 
         board.setStartingPositions(
             0 to character1,
@@ -202,7 +202,7 @@ internal class BoardTest {
         board.setStartingPositions(
             0 to TINY.toInstance(board, attack = 6, health = 4),
             1 to B_A_A_D_BILLY_GRUFF.toInstance(board, attack = 2, health = 6),
-            4 to BABY_ROOT.toInstance(board),
+            4 to BABY_ROOT.toInstance(board, attack = 0, health = 3),
         )
 
         with(board.positions[0]!!) {
@@ -223,12 +223,12 @@ internal class BoardTest {
     fun `summoning and removing a unit adds and removes its supports`() {
         val board = Board(APOCALYPSE)
 
-        val babyRoot = BABY_ROOT.toInstance(board)
+        val babyRoot = BABY_ROOT.toInstance(board, attack = 0, health = 3)
 
         board.setStartingPositions(
-            0 to TINY.toInstance(board),
-            1 to B_A_A_D_BILLY_GRUFF.toInstance(board),
-            2 to TINY.toInstance(board),
+            0 to TINY.toInstance(board, attack = 6, health = 1),
+            1 to B_A_A_D_BILLY_GRUFF.toInstance(board, attack = 2, health = 3),
+            2 to TINY.toInstance(board, attack = 6, health = 1),
         )
 
         board.summon(babyRoot, 4)
@@ -271,11 +271,11 @@ internal class BoardTest {
     fun `adding and removing a unit with trait-based supports adds and removes them from matching units`() {
         val board = Board(APOCALYPSE)
 
-        val fanny = FANNY.toInstance(board)
+        val fanny = FANNY.toInstance(board, attack = 2, health = 2)
 
         board.setStartingPositions(
-            0 to TINY.toInstance(board),
-            1 to B_A_A_D_BILLY_GRUFF.toInstance(board),
+            0 to TINY.toInstance(board, attack = 6, health = 1),
+            1 to B_A_A_D_BILLY_GRUFF.toInstance(board, attack = 2, health = 3),
         )
 
         board.summon(fanny, 4)
@@ -314,15 +314,15 @@ internal class BoardTest {
     @Test
     fun `board with only zero-attack units has no attackers`() {
         val board = Board(APOCALYPSE)
-        board.summon(BABY_ROOT.toInstance(board), 0)
+        board.summon(BABY_ROOT.toInstance(board, attack = 0, health = 3), 0)
         assertTrue(board.hasNoAttackers())
     }
 
     @Test
     fun `board with non-zero-attack units has attackers`() {
         val board = Board(APOCALYPSE)
-        board.summon(BABY_ROOT.toInstance(board), 0)
-        board.summon(TINY.toInstance(board), 1)
+        board.summon(BABY_ROOT.toInstance(board, attack = 0, health = 3), 0)
+        board.summon(TINY.toInstance(board, attack = 6, health = 1), 1)
         assertFalse(board.hasNoAttackers())
     }
 }
