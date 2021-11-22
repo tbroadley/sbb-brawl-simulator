@@ -41,6 +41,7 @@ fun simulate(brawl: Brawl): Brawl.Result {
 
         if (defender.health <= 0) {
             defendingBoard.remove(defender)
+            attacker.character.onSlay(attackingBoard)
 
             println("$defender dies")
         }
@@ -62,13 +63,12 @@ class Simulator {
         fun main(args: Array<String>) {
             val board1 = Board(APOCALYPSE)
             board1.setStartingPositions(
-                0 to BLACK_CAT.toInstance(board1, attack = 1, health = 4),
-                4 to BABY_ROOT.toInstance(board1, attack = 0, health = 3),
+                0 to KITTY_CUTPURSE.toInstance(board1, attack = 1, health = 1),
             )
 
             val board2 = Board(SIR_GALAHAD)
             board2.setStartingPositions(
-                0 to BABY_DRAGON.toInstance(board2, attack = 3, health = 2),
+                0 to KITTY_CUTPURSE.toInstance(board2, attack = 1, health = 1),
             )
 
             val brawl = Brawl(board1 = board1, board2 = board2)
@@ -84,6 +84,9 @@ class Simulator {
                     println("Tie")
                 }
             }
+
+            println("$board1 gold earned: ${board1.goldEarned}")
+            println("$board2 gold earned: ${board2.goldEarned}")
         }
     }
 }

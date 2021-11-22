@@ -77,6 +77,8 @@ data class Board(
     fun frontRowCharacterDistribution() = positions.take(4).uniformDistribution()
     fun backRowCharacterDistribution() = positions.drop(4).uniformDistribution()
     fun characterDistribution() = positions.uniformDistribution()
+
+    var goldEarned = 0
 }
 
 private fun List<CharacterInstance?>.uniformDistribution(): Distribution<CharacterInstance?> {

@@ -58,6 +58,17 @@ enum class Character(
     HAPPY_LITTLE_TREE(
         humanReadableName = "Happy Little Tree",
     ),
+    HUMPTY_DUMPTY(
+        humanReadableName = "Humpty Dumpty",
+    ),
+    KITTY_CUTPURSE(
+        humanReadableName = "Kitty Cutpurse",
+        keywords = listOf(
+            Slay { board ->
+                board.goldEarned += 1
+            }
+        ),
+    ),
     TINY(
         humanReadableName = "Tiny",
         traits = listOf(DWARF),
@@ -71,6 +82,12 @@ enum class Character(
     fun onLastBreath(board: Board, position: Int) {
         for (lastBreath in keywords.filterIsInstance<LastBreath>()) {
             lastBreath.onLastBreath(board, position)
+        }
+    }
+
+    fun onSlay(board: Board) {
+        for (slay in keywords.filterIsInstance<Slay>()) {
+            slay.onSlay(board)
         }
     }
 }
